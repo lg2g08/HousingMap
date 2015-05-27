@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    .featureInfo.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
+                    .modal-title
+                        h4#featureTitle
+                        .btn-group#modalHeaderButtons
+                    p#totalsText
+
+                .modal-body#featureInfoCanvas
+                    //h4#featureIdTitle
+                .modal-footer
+                    h5#featureIdTitle
+
+    .container#mapContainer
+        .row#buttonRow
+            .row-md
+                .input-group#findPay
+                    input#pay.form-control(type='text', name='search', placeholder="Search by income...")
+                    span.input-group-btn
+                        button#findButton.btn.btn-default.btn(type='submit')
+            .row-md
+                .input-group#findYear
+                    select#yearList.form-control                    
+            .row-md
+                .input-group#useTTWPay
+                    span.input-group-btn
+                        button#TTWpay.btn.btn-default.btn(type='submit') Use TTW Average
+            .row-md
+                .input-group#SCATTERPLOT
+                    span.input-group-btn
+                        button#sPLOT.btn.btn-default.btn(type='submit') Scatter Plot
+            
+            .row-md
+                .input-group#goBACK
+                    span.input-group-btn
+                        button#BackButton.btn.btn-default.btn(type='submit') Reset Map
+
+        .mapCanvas
+        .loading
