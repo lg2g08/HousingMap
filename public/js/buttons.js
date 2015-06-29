@@ -15,16 +15,18 @@ $(function () { //change year from list
 
 function polygonColors(year){
     $('.loading').show();
-    if(oDeficiencyData.hasOwnProperty(year)) {
-        addPolygonColors(oDeficiencyData[year])
-        $('.loading').hide();
-    } else {
+    // if(oDeficiencyData.hasOwnProperty(year)) {
+        // addPolygonColors(oDeficiencyData[year])
+        // $('.loading').hide();
+    // } 
+    // else {
         $.ajax("/deficiency_data/" + year + "/").done(function (oDeficiencyDataYear) {
+            oDeficiencyData[year] = {};
             oDeficiencyData[year] = oDeficiencyDataYear;
             addPolygonColors(oDeficiencyData[year])
             $('.loading').hide();
         });
-    };
+    // };
 }
 
 function addPolygonColors(oDeficiencyData){
@@ -111,9 +113,7 @@ function drawSalesChart(salesDistribution, err){
         .append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")   
         .classed("svg-content-responsive", true)
-        .attr("viewBox", "0 0 " + (width*3) + " " + (margin.top + height + margin.bottom) )
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("viewBox", "0 0 1200 1600")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         
@@ -125,8 +125,8 @@ function drawSalesChart(salesDistribution, err){
         .attr("class", "bar")
         .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; })
         // something here
-        .on('mouseover', function(d) tip.show("£ " + d, featureInfoContainer))
-	    .on('mouseout', function(d) tip.hide("£ " + d, featureInfoContainer));
+        .on('mouseover', function(d) {tip.show("£ " + d, featureInfoContainer)})
+	    .on('mouseout', function(d) {tip.hide("£ " + d, featureInfoContainer)});
 
     bar.append("rect")
         .attr("x", 3)
@@ -175,11 +175,11 @@ function drawScatterPlot(data, err) {
         height = 800 - margin.top - margin.bottom;
   
     var x = d3.scale.linear()
-              .domain([0, (5000 + d3.max(d3.entries(data), function(d) { return d.value[1]; }))])
+              .domain([0, (5000 + d3.max(d3.entries(data), function(d) { return d.value[1] }))])
               .range([ 0, width ]);
     
     var y = d3.scale.linear()
-    	      .domain([0, (5000 + d3.max(d3.entries(data), function(d) { return d.value[0]; }))])
+    	      .domain([0, (5000 + d3.max(d3.entries(data), function(d) { return d.value[0] }))])
     	      .range([ height, 0 ]);
               
     var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d.key; });
@@ -193,9 +193,7 @@ function drawScatterPlot(data, err) {
                   .append("svg")
                   .attr("preserveAspectRatio", "xMinYMin meet")   
                   .classed("svg-content-responsive", true)
-                  .attr("viewBox", "0 0 " + (width*3) + " " + (margin.top + height + margin.bottom) )
-                  .attr("width", width + margin.left + margin.right)
-                  .attr("height", height + margin.top + margin.bottom)
+                  .attr("viewBox", "0 0 1200 1600")
                   .append("g")
                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");            
 
@@ -236,8 +234,8 @@ function drawScatterPlot(data, err) {
           .attr("cy", function (d) { return y(d.value[0]); } )
           .attr("r", 10)
           .attr("fill", "steelblue")
-          .on('mouseover', function(d) tip.show(d, featureInfoContainer))
-	      .on('mouseout', function(d) tip.hide(d, featureInfoContainer));
+          .on('mouseover', function(d) {tip.show(d, featureInfoContainer)})
+          .on('mouseout', function(d) {tip.hide(d, featureInfoContainer)});
           
     svg.append("text")
     .attr("class", "x label")
@@ -274,6 +272,7 @@ function loadMapColours(idTTW){
     }
 
 function featureClick(event){
+    
     if (event.feature.getProperty('TTWA07CD') != undefined) {
         var id = event.feature.getProperty('TTWA07CD');
         var name = event.feature.getProperty('TTWA07NM');
@@ -303,15 +302,16 @@ function featureClick(event){
 
 $(function() { // BACK BUTTON
     $("#goBACK").click(function(){
-        $.ajax("/mapFlag" ).done(function () {
-            mapFlag = false;
+        $.ajax("/reset" ).done(function () {
+            var mapFlag = 0;
         });
         map.data.forEach(function (feature) {
             map.data.remove(feature);
         });
+        oDeficiencyData[year] = {};
         loadGeoData(topojson.feature(oTTWarea, oTTWarea.objects.TTW));
-        $.ajax("/deficiency_data/" + year).done(function (oDeficiencyDataYear) {
-            oDeficiencyData[year] = oDeficiencyDataYear;
+        $.ajax("/map_reset/" ).done(function (data) {
+            oDeficiencyData[year] = data
             addPolygonColors(oDeficiencyData[year]);
         });
     })
@@ -321,7 +321,6 @@ $(function() { // TTW BUTTON
     $("#useTTWPay").click(function(){
         $.ajax("/TTW_pay/" + year ).done(function (oDeficiencyDataYear) {
             oDeficiencyData[year] = oDeficiencyDataYear;
-            console.log(oDeficiencyData[year])
             addPolygonColors(oDeficiencyData[year]);
         });
     })

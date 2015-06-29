@@ -38,36 +38,39 @@ body {
 
 .form-control{
     top: 0;
-    height: 60%;
-    font-size: 200%; 
+    height: 30%;
+    font-size: 80%; 
 }
 
 .btn{
     top: 0;
-    height: 130%;
-    width: 80%;
+    height: 110%;
+    /* font-size: 125%; */
 }
 
 #goBACK{
    z-index: 22;
+   width: 50%;
 }
 
 #useTTWPay{
    z-index: 22;
+   width: 50%;
 }
 
 #SCATTERPLOT{
    z-index: 22;
+   width: 50%;
 }
 
 .input-group-btn:not(:first-child):not(:last-child) >.btn {
     border-radius: 0;
-    width: 100%;
+    width: 500%;
 }
 
 .input-group{
     margin: 1%;
-    width: 20%;
+    width: 30%;
 }
 
 #buttonRow{
@@ -81,7 +84,7 @@ body {
 
 .findYear{
     z-index: 11;
-    width: 150px;
+    width: 30%;
 }
 
 #yearList{
@@ -104,11 +107,11 @@ body {
 #keyContainer {
     /*display: inline-block;*/
     position: relative;
-    padding-bottom: 20%; /* aspect ratio */
+    padding-bottom: 70%; /* aspect ratio */
     vertical-align: bottom;
     margin-top: -20%;
-    margin-left: 85%;
- 
+    margin-left: 80%;
+    /* overflow: hidden; */
 }
 .svg-content-responsive {
     display: inline-block;
@@ -116,7 +119,7 @@ body {
     top: 10px;
     left: 0;
     width: 100%;
-    height: 150%;
+    height: 100%;
 }
 
 #referenceContainer{

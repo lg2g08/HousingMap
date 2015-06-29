@@ -15,7 +15,7 @@ var o2014PPRoom = require("./data/2014ppRoom");
 var homeYear = "2014";
 var year;
 var thisTTW;
-var mapFlag = false;
+var mapFlag = 0;
 var val = 21851;
 var oLSOAName = require("./data/LSOAname.json");
 var oTTWName = require("./data/TTWname.json");
@@ -74,10 +74,10 @@ app.get('/references', function(req, res){
 app.get('/deficiency_data/:year/:val' , function(req, res){
     year = req.params["year"];
     val = req.query.search;
-    app.get( '/mapFlag', function(data) {
+    app.get( '/reset', function(data) {
     mapFlag = data;
     });
-    if(mapFlag == true){
+    if(mapFlag == 1){
     var oDeficiencyData = calculateDeficiency(oLSOASales[year][thisTTW], val);
     res.json(oDeficiencyData);
     }
@@ -88,10 +88,10 @@ app.get('/deficiency_data/:year/:val' , function(req, res){
 
 app.get('/deficiency_data/:year/' , function(req, res){
     year = req.params["year"];
-    app.get( '/mapFlag', function(flagData) {
+    app.get( '/reset', function(flagData) {
     mapFlag = flagData;
     });
-    if(mapFlag == true){
+    if(mapFlag == 1){
     var oDeficiencyData = calculateDeficiency(oLSOASales[year][thisTTW], val);
     res.json(oDeficiencyData[year]);
     }
@@ -101,7 +101,7 @@ app.get('/deficiency_data/:year/' , function(req, res){
 }});
 
 app.get("/LSOA_Sales_map/:idTTW/", function(req, res){
-    mapFlag = true;
+    mapFlag = 1;
     var idTTW = req.params["idTTW"];
     thisTTW = idTTW;
     var oDeficiencyData = calculateDeficiency(oLSOASales[year][thisTTW], val);
@@ -126,10 +126,10 @@ app.get("/pay_data/:year/:idTTW/:id", function(req, res){
 app.get("/TTW_pay/:year/", function(req,res){
     var idTTW = req.params["idTTW"];
     var year = req.params["year"];
-    app.get( '/mapFlag', function(flagData) {
+    app.get( '/reset', function(flagData) {
     mapFlag = flagData;
     });
-    if(mapFlag == true){
+    if(mapFlag == 1){
     var oDeficiencyData = calculateDeficiency(oLSOASales[year][thisTTW], oLSOApay[year][thisTTW]);
     res.json(oDeficiencyData[year]);
     }
@@ -140,31 +140,37 @@ app.get("/TTW_pay/:year/", function(req,res){
 });
 
 app.get('/SCATTER_PLOT/' , function(req, res){
-    app.get( '/mapFlag', function(data) {
+    app.get( '/reset', function(data) {
     mapFlag = data;
     });
     var scatterData = {};
     var id;
-    if(mapFlag == true){
+    if(mapFlag == 1){
+        var val;
     for(id in oLSOASales[year][thisTTW]){
-            var val = 0;
             if(!(scatterData.hasOwnProperty(year))){scatterData[year] = {}}
-            if(!(scatterData[year].hasOwnProperty(id))){scatterData[year][id] = {}}
-            val = oLSOASales[year][thisTTW][id][Math.floor(oLSOASales[year][thisTTW][id].length/2)];
-            scatterData[year][oLSOAName[id]] = [val, oPay[year][oLookUps[thisTTW]]['median']];
+            if(!(scatterData[year].hasOwnProperty(id))){scatterData[year][oLSOAName[id]] = {}}
+            val = oLSOASales[year][thisTTW][id][Math.floor(oLSOASales[year][thisTTW][id].length/2)]
+            scatterData[year][oLSOAName[id]] = [val, oPay[year][oLookUps[thisTTW]]['median']]
             }
     }
     else{
+        var val;
         for(id in oSales[year]){
-            var val = 0;
             if(oPay[year][id]['median'] != 'x'){
             if(!(scatterData.hasOwnProperty(year))){scatterData[year] = {}}
-            if(!(scatterData[year].hasOwnProperty(id))){scatterData[year][id] = {}}
-            val = oSales[year][id][Math.floor(oSales[year][id].length/2)];
-            scatterData[year][oTTWName[id]] = [val, oPay[year][id]['median']];
+            if(!(scatterData[year].hasOwnProperty(id))){scatterData[year][oTTWName[id]] = {}}
+            val = oSales[year][id][Math.floor(oSales[year][id].length/2)]
+            scatterData[year][oTTWName[id]] = [val, oPay[year][id]['median']]
         }}
     }
     res.json(scatterData[year]);
+});
+
+app.get('/map_reset/' , function(req, res){
+    mapFlag = 0;
+    oDeficiencyData = calculateDeficiency(oSales[year], val);
+    res.json(oDeficiencyData[year]);
 });
 
 app.get('/', function(req, res){
@@ -190,4 +196,4 @@ app.get('/', function(req, res){
 
 var oDeficiencyData = calculateDeficiency(oSales[year], val);
 
-app.listen(3003);
+app.listen(2000);
