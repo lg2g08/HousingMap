@@ -56,7 +56,9 @@ function initialize() {
     });
 
     map.data.addListener('click', function(event) {
-        featureClick(event)
+        var lat = event.latLng.lat();
+        var lng = event.latLng.lng();
+        featureClick(event,lat, lng)
     });    
     
     loadGeoData(topojson.feature(oTTWarea, oTTWarea.objects.TTW));

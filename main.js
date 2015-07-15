@@ -11,10 +11,10 @@ var oSales = require("./data/TTWSalesDataAll.json");
 var oLSOApay = require("./data/LSOApayDataByTTWAll.json");
 var oLSOASales = require("./data/LSOASalesByTTWAll.json");
 var oLookUps = require("./data/TTWlookup.json");
-var o2014PPRoom = require("./data/2014ppRoom");
+var oAverages = require("./data/averages.json");
 var homeYear = "2014";
 var year;
-var thisTTW;
+var thisTTW = 'undefined';
 var mapFlag = 0;
 var val = 21851;
 var oLSOAName = require("./data/LSOAname.json");
@@ -168,6 +168,7 @@ app.get('/SCATTER_PLOT/' , function(req, res){
 });
 
 app.get('/map_reset/' , function(req, res){
+    val = 21851;
     mapFlag = 0;
     oDeficiencyData = calculateDeficiency(oSales[year], val);
     res.json(oDeficiencyData[year]);
@@ -189,7 +190,7 @@ app.get('/', function(req, res){
                         , LookUps: oLookUps
                         , LSOAName: oLSOAName
                         , TTWName: oTTWName
-                        , ppRoom: o2014PPRoom
+                        , averages: oAverages
                         }
     );
 });

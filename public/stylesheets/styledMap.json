@@ -28,5 +28,16 @@
     "stylers": [
       { "visibility": "simplified" }
     ]
+  },
+   {
+    "featureType": "landscape.natural",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "poi",
+    "stylers": [
+      { "visibility": "off" }
+    ]
   }
 ]

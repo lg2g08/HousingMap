@@ -12,9 +12,10 @@ html
         link(rel='stylesheet', href='/stylesheets/drawBarChart.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
         link(rel='stylesheet', media="(max-width: 700px)", href='stylesheets/mobile.css')
+        link(rel='stylesheet', media="(max-width: 700px)", href='stylesheets/mobileBarChart.css')
 
-        script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true")
         script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+        script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true")
         script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
         script(src="http://d3js.org/topojson.v1.min.js")
         script(src="http://d3js.org/d3.v3.min.js")
@@ -37,12 +38,12 @@ html
             var oPay = !{JSON.stringify(Pay)};
             var oSales = !{JSON.stringify(Sales)};
             var oLSOAPay = !{JSON.stringify(LSOAPay)};
-            var oLSOASales = !{JSON.stringify(LSOASales)}
+            var oLSOASales = !{JSON.stringify(LSOASales)};
             var oLookUps = !{JSON.stringify(LookUps)};
             var scatterData = {};
             var oTTWName = !{JSON.stringify(TTWName)};
             var oLSOAName = !{JSON.stringify(LSOAName)};
-            var o2014PPRoom = !{JSON.stringify(ppRoom)}
+            var oAverages = !{JSON.stringify(averages)};
 
     body
 
@@ -62,9 +63,6 @@ html
                         li
                             a(href='/').glyphicon.glyphicon-home
                         li
-                            a(href='/references').glyphicon.glyphicon-info-sign
-                        li
-                            a(href="http://goo.gl/c6rzBt") press release
-
+                            a(href='/references') Data Sources
 
         block content

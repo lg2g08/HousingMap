@@ -35,8 +35,8 @@ function selectKeyColor(n){
 function addKeyD3() {
 
     var oKeyColors = setKeyColors()
-    var h = 300;
-    var w = 100;
+    var h = 250;
+    var w = 150;
 
     var svg = d3.select("#mapContainer")
         .append("div")
@@ -44,11 +44,8 @@ function addKeyD3() {
         .attr("id", "keyContainer")
         .append("svg")
         .attr("id", "keyCanvas")
-        //responsive SVG needs these 2 attributes and no width and height attr
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 " + w + " " + (h) )
-        //class to make it responsive
-        .classed("svg-content-responsive", true);
+        .attr("height", h)
+        .attr("width", w)
 
 
     //var h = Number(svg.style("height").slice(0, -2));
