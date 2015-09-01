@@ -74,6 +74,8 @@ app.get('/references', function(req, res){
 app.get('/deficiency_data/:year/:val' , function(req, res){
     year = req.params["year"];
     val = req.query.search;
+    val = val.replace(/,/g, "");
+    val = val.replace(/ /g,"");
     app.get( '/reset', function(data) {
     mapFlag = data;
     });
