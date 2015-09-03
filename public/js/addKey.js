@@ -1,4 +1,4 @@
-var aKeyValues = ["Less Than 1%", "1-5%", "5-10%", "10-15%", "15-20%", "20-25%", "More than 25%",  "no data"]
+var aKeyValues = ["% of affordable houses", "Less Than 1%", "1-5%", "5-10%", "10-15%", "15-20%", "20-25%", "More than 25%",  "no data"]
 
 function setKeyColors(){
     var oKeyColors = {};
@@ -6,17 +6,18 @@ function setKeyColors(){
     oKeyColors["color1"] = "hsla(120, 100%, 70%, 1)";
     var hue = 60;
     var hueMin = 0;
-    var hueStep = (hue - hueMin) /  (aKeyValues.length - 3);
+    var hueStep = (hue - hueMin) /  (aKeyValues.length - 4);
     var lightness = 70;
     var lightnessMin = 50;
-    var lightnessStep = (lightness - lightnessMin) /  (aKeyValues.length - 3);
-    for(i = 2; i < aKeyValues.length; i++){
+    var lightnessStep = (lightness - lightnessMin) /  (aKeyValues.length - 4);
+    for(i = 2; i < (aKeyValues.length - 1); i++){
         name = "color" + i;
         value = "hsla(" + hue + " ,100%, " + lightness + "%, 1)";
         oKeyColors[name] = value
         hue -= hueStep;
         lightness -=lightnessStep;
     }
+    oKeyColors["color8"] = "hsla(0, 0%, 100%, 1)";
     return oKeyColors
 }
 

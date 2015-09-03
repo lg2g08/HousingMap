@@ -26,16 +26,14 @@ html
         script(src="/js/buttons.js")
         script(src="/js/maps.js")
         script.
-            var year = !{JSON.stringify(year)};
             var mapStyles = !{JSON.stringify(mapStyle)};
             var mapStylesLocal = !{JSON.stringify(mapStyleLocal)};
             var oTTWarea = !{JSON.stringify(TTWarea)};
             var oLSOAarea = !{JSON.stringify(LSOAarea)};
-            var oDeficiencyDataYear = !{JSON.stringify(deficiencyData)};
+            var year = !{JSON.stringify(year)};
             var oDeficiencyData = {};
+            var oDeficiencyDataYear = !{JSON.stringify(deficiencyData)};
             oDeficiencyData[year] =  oDeficiencyDataYear;
-            var oPay = !{JSON.stringify(Pay)};
-            var oLSOAPay = !{JSON.stringify(LSOAPay)};
             var oLookUps = !{JSON.stringify(LookUps)};
             var scatterData = {};
             var oTTWName = !{JSON.stringify(TTWName)};

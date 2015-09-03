@@ -19,6 +19,7 @@ var mapFlag = 0;
 var val = 21851;
 var oLSOAName = require("./data/LSOAname.json");
 var oTTWName = require("./data/TTWname.json");
+var oDeficiencyData = {};
 
 app.set("views", __dirname + "/views");
 app.set("view engine","jade");
@@ -170,13 +171,17 @@ app.get('/SCATTER_PLOT/' , function(req, res){
 });
 
 app.get('/map_reset/' , function(req, res){
+    year = 2014;
     val = 21851;
     mapFlag = 0;
     oDeficiencyData = calculateDeficiency(oSales[year], val);
     res.json(oDeficiencyData[year]);
 });
 
+var oDeficiencyData = calculateDeficiency(oSales[year], val);
+
 app.get('/', function(req, res){
+    console.log(year)
     res.render('index', {
                         title: "Housing"
                         , year: homeYear
@@ -184,19 +189,17 @@ app.get('/', function(req, res){
                         , mapStyleLocal: aMapStylesLocal
                         , TTWarea : oTTWarea
                         , LSOAarea: oLSOAarea
-                        , deficiencyData : oDeficiencyData[year]
-                        , Pay : oPay[year] 
-                        , Sales : oSales[year]
-                        , LSOAPay: oLSOApay[year]
-                        , LSOASales: oLSOASales[year]
+                        , deficiencyData : oDeficiencyData[homeYear]
+                        , Pay : oPay[homeYear] 
+                        , Sales : oSales[homeYear]
+                        , LSOAPay: oLSOApay[homeYear]
+                        , LSOASales: oLSOASales[homeYear]
                         , LookUps: oLookUps
                         , LSOAName: oLSOAName
                         , TTWName: oTTWName
                         , averages: oAverages
                         }
-    );
+    )
 });
-
-var oDeficiencyData = calculateDeficiency(oSales[year], val);
 
 app.listen(2000);

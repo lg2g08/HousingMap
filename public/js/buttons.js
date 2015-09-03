@@ -29,13 +29,14 @@ function polygonColors(year){
         // $('.loading').hide();
     // } 
     // else {
-        $.ajax("/deficiency_data/" + year + "/").done(function (oDeficiencyDataYear) {
+        $.ajax("/deficiency_data/" + year + "/").done(function (oDeficiencyDataNewYear) {
             oDeficiencyData[year] = {};
-            oDeficiencyData[year] = oDeficiencyDataYear;
+            oDeficiencyData[year] = oDeficiencyDataNewYear;
             addPolygonColors(oDeficiencyData[year])
             $('.loading').hide();
         });
     // };
+    console.log(oDeficiencyData)
 }
 
 function addPolygonColors(oDeficiencyData){
@@ -422,7 +423,7 @@ $(function() { // BACK BUTTON
         });
         map.setZoom(7);
         map.setCenter(new google.maps.LatLng(52.477568, -1.685511));
-        oDeficiencyData[year] = {};
+        oDeficiencyData = {};
         loadGeoData(topojson.feature(oTTWarea, oTTWarea.objects.TTW));
         $.ajax("/map_reset/" ).done(function (data) {
             oDeficiencyData[year] = data
